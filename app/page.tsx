@@ -687,9 +687,21 @@ export default function TaskIOv2() {
               <BarChart data={chartData} barSize={12} margin={{ top: 4, right: 4, bottom: 0, left: -20 }}>
                 <XAxis dataKey="day" tick={{ fontSize: 10, fill: isDark ? "#A0A0A0" : "#6B6B6B" }} axisLine={false} tickLine={false} />
                 <YAxis domain={[0, 100]} tick={{ fontSize: 10, fill: isDark ? "#A0A0A0" : "#6B6B6B" }} axisLine={false} tickLine={false} tickFormatter={v => `${v}%`} />
-                <Tooltip cursor={{ fill: isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.04)" }}
-                  contentStyle={{ backgroundColor: isDark ? "#1A1A1A" : "#fff", border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`, borderRadius: 10, fontSize: 12, color: isDark ? "#F5F5F5" : "#1A1A1A" }}
-                  formatter={(v) => [`${v ?? 0}%`, "Score"]} labelFormatter={(l) => `Day ${l}`}
+                <Tooltip
+  cursor={{ fill: isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.04)" }}
+  contentStyle={{
+    backgroundColor: isDark ? "#1A1A1A" : "#fff",
+    border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`,
+    borderRadius: 10, fontSize: 12,
+    color: isDark ? "#F5F5F5" : "#1A1A1A",
+  }}
+  formatter={(v) => {
+    const val = typeof v === "number" ? v : 0;
+    return [`${val}%`, "Score"];
+  }}
+  labelFormatter={(l) => `Day ${l}`}
+/>
+
                 <Bar dataKey="score" radius={[4, 4, 0, 0]}>
                   {chartData.map((entry, i) => {
                     const s = entry.score ?? 0;
